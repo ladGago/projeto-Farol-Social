@@ -1,0 +1,53 @@
+﻿@model ProjetoModel
+@{
+    Layout = "_LayoutDeslogado";
+    ViewData["Title"] = "Detalhes do Projeto";
+}
+
+<div class="container my-5">
+    <div class="card shadow-sm border-success">
+        <div class="card-header bg-success text-white">
+            <h3 class="card-title mb-0">@Model.NomeProjeto</h3>
+        </div>
+
+        <div class="card-body">
+            <h5 class="text-success">Descrição</h5>
+            <p>@Model.Descricao</p>
+
+            <hr />
+
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="text-success">Tipo de Projeto</h5>
+                    <p>@Model.Tipo</p>
+                </div>
+                <div class="col-md-6">
+                    <h5 class="text-success">Público Alvo</h5>
+                    <p>@Model.Publico</p>
+                </div>
+            </div>
+
+            <hr />
+
+            <h5 class="text-success">Endereço</h5>
+            <p>
+                Rua: @Model.Rua, Nº: @Model.Numero <br />
+                Bairro: @Model.Bairro <br />
+                Cidade: @Model.Cidade <br />
+                Estado: @Model.Estado <br />
+                CEP: @Model.Cep
+            </p>
+
+            <hr />
+
+            <h5 class="text-success">Contato</h5>
+            <p>@Model.Telefone</p>
+        </div>
+
+        <div class="card-footer text-end">
+            <a asp-controller="Login" asp-action="ProjetosVisitantes" class="btn btn-outline-success">
+                Voltar para Projetos
+            </a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,71 @@
+﻿@model List<ProjetoModel>
+@{
+    ViewData["Title"] = "Lista de Projetos";
+}
+
+<div class="text-center">
+    <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+        <a class="btn btn-primary" role="button" asp-controller="Projetos" asp-action="Criar"> Adicionar Novo Projeto </a>
+    </div>
+    <br />
+
+    @if (TempData["MensagemSucesso"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">X</button>
+            @TempData["MensagemSucesso"]
+        </div>
+    }
+
+    @if (TempData["MenssagemErro"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">X</button>
+            @TempData["MenssagemErro"]
+        </div>
+    }
+    
+
+   <br />
+
+    <h1 class="display-4"> Lista de Projetos</h1>
+
+    <table class="table" id="tableProjetos">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">nome</th>
+                <th scope="col">Tipo</th>
+                <th scope="col">Publico</th>
+                <th scope="col">Bairro</th>
+                <th scope="col"></th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @if(Model != null && Model.Any())
+            {
+                foreach(ProjetoModel projeto in Model)
+                {
+                    <tr>
+                        <th scope="row">@projeto.Id</th> 
+                        <td>@projeto.NomeProjeto</td>
+                        <td>@projeto.Tipo</td>
+                        <td> @projeto.Publico </td>
+                        <td>@projeto.Bairro</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a role="button" class="btn btn-primary" asp-route-id="@projeto.Id" asp-controller="Projetos" asp-action="Editar">Editar</a>
+                                <a role="button" class="btn btn-danger" asp-route-id="@projeto.Id" asp-controller="Projetos" asp-action="ApagarConfirmacao">Apagar</a>
+                            </div>
+                        </td>
+
+                    </tr>
+                }
+            }
+
+
+        </tbody>
+    </table>
+</div>
+

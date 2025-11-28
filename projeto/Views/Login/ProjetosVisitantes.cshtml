@@ -1,0 +1,97 @@
+﻿@model List<ProjetoModel>
+
+@{
+    Layout = "_LayoutDeslogado";
+    ViewData["Title"] = "Pagina Inicial Login";
+
+}
+
+<div class="container mb-4">
+    <div class="row g-3">
+        <div class="col-md-4">
+            <input type="text" id="filtroBairro" placeholder="Pesquisar por bairro" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <select id="filtroTipo" class="form-select">
+                <option value="">Filtrar por tipo</option>
+                <option>Doação de Alimento</option>
+                <option>Ensino</option>
+                <option>Esporte</option>
+                <option>Doação de Roupa</option>
+                <option>Serviços</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <select id="filtroPublico" class="form-select">
+                <option value="">Filtrar por público</option>
+                <option>Homens</option>
+                <option>Mulheres</option>
+                <option>Crianças</option>
+                <option>Idosos</option>
+                <option>Aberto</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+
+<section class="py-5 bg-light">
+    <div class="container">
+        <h1 class="text-center fw-bold text-success mb-5">Projetos Disponíveis</h1>
+        <div class="row g-4">
+            @if (Model != null && Model.Any())
+            {
+                foreach (var projeto in Model)
+                {
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card h-100 shadow-sm rounded bg-white border-0">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title fw-bold text-success">@projeto.NomeProjeto</h5>
+                                <p class="card-text mb-2">
+                                    <span class="badge bg-success me-1">@projeto.Tipo</span>
+                                    <span class="badge bg-secondary">@projeto.Publico</span>
+                                </p>
+                                <p class="text-muted mb-3"><strong>Bairro:</strong> @projeto.Bairro</p>
+                                <p class="card-text text-truncate" style="flex-grow:1;">@projeto.Descricao</p>
+                                <a asp-controller="Login" asp-action="DetalhesVisitante" asp-route-id="@projeto.Id" class="btn btn-success mt-3 fw-bold">
+                                    Saiba Mais
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <p class="text-center text-muted">Nenhum projeto disponível no momento.</p>
+            }
+        </div>
+    </div>
+</section>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function filtrarProjetos() {
+        var bairro = $('#filtroBairro').val().toLowerCase();
+        var tipo = $('#filtroTipo').val().toLowerCase();
+        var publico = $('#filtroPublico').val().toLowerCase();
+
+        $('.card').each(function() {
+            var cardBairro = $(this).find('p:contains("Bairro")').text().toLowerCase();
+            var cardTipo = $(this).find('.badge.bg-success').text().toLowerCase();
+            var cardPublico = $(this).find('.badge.bg-secondary').text().toLowerCase();
+
+            var mostrar = true;
+
+            if (bairro && !cardBairro.includes(bairro)) mostrar = false;
+            if (tipo && !cardTipo.includes(tipo)) mostrar = false;
+            if (publico && !cardPublico.includes(publico)) mostrar = false;
+
+            $(this).closest('.col-md-6, .col-lg-4').toggle(mostrar);
+        });
+    }
+
+    $('#filtroBairro, #filtroTipo, #filtroPublico').on('input change', filtrarProjetos);
+</script>
+

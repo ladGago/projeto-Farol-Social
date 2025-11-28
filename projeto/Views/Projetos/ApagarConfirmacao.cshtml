@@ -1,0 +1,14 @@
+﻿@model ProjetoModel
+@{
+    ViewData["Title"] = "Confirmação de Apagar Projeto";
+}
+
+
+
+<div class="text-center">
+    <h3>Realmente deseja apagar o Projeto(@Model.NomeProjeto)?</h3>
+</div> 
+
+<a class="btn btn-primary w-100" role="button" asp-controller="Projetos" asp-action="Index">Cancelar Exclusão</a>
+<br />
+<a class="btn btn-danger w-100" role="button" asp-controller="Projetos" asp-route-id="@Model.Id" asp-action="Apagar">Confirmar Exclusão</a>

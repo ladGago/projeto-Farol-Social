@@ -1,0 +1,65 @@
+﻿@using projeto.Enums
+@model UsuarioModel
+@{
+    ViewData["Title"] = "Editar Usuário";
+}
+
+<div class="text-center">
+    
+    <h1 class="display-4"> Editar  Usuário.</h1>
+        
+</div>
+
+
+<div class="container mt-5">
+    
+
+    <form asp-controller="Usuario" asp-action="Editar" method="post" id="formProjetoSocial">
+        <input type="hidden" asp-for="Id" />
+        <!-- Nome do Usuario -->
+        <div class="mb-3">
+            <label for="nome" class="form-label">Nome</label>
+            <input type="text" asp-for="Nome" class="form-control"  />
+            @Html.ValidationMessageFor(x => x.Nome)
+        </div
+ 
+
+
+        <!-- Email do Usuario -->
+        <div class="mb-3">
+            <label for="descricao" class="form-label">Email</label>
+            <input asp-for="Email" class="form-control" />
+            @Html.ValidationMessageFor(x => x.Email)
+        </div>
+        <!-- Login do Usuario -->
+        <div class="mb-3">
+            <label for="contato" class="form-label">Login</label>
+            <input type="text" asp-for="Login" class="form-control"    />
+            @Html.ValidationMessageFor(x => x.Login)
+        </div>
+
+        <!-- Perfil do Usuario-->
+
+
+
+        <div class="mb-3">
+            <label for="cep" class="form-label">Perfil</label>
+            <select asp-for="Perfil" class="form-control">
+                <option value="" > Selecione</option>
+                <option value="@PerfilEnum.Admin" > Administrador</option>
+                <option value="@PerfilEnum.Padrao" > Padrão</option>
+            </select>
+            @Html.ValidationMessageFor(x => x.Perfil)
+        </div>
+
+      
+      
+        <button type="submit" asp-controller="Usuario" asp-action="Editar" class="btn btn-primary">Atualizar</button>
+        <a class="btn btn-secondary" asp-controller="Usuario" asp-action="Index" role="button"> Voltar</a>
+    </form>
+</div>
+
+
+
+
+         

@@ -1,0 +1,142 @@
+﻿@model ProjetoModel
+@{
+    ViewData["Title"] = "Editar dados Projeto";
+}
+
+<div class="text-center">
+
+    <h1 class="display-4"> Editar Projeto.</h1>
+
+</div>
+
+
+<div class="container mt-5">
+    
+
+ 
+
+   <form asp-controller="Projeto" asp-action="Alterar" method="post" >
+        <!-- Nome do Projeto --> 
+        <div class="mb-3">
+            <input type="hidden" asp-for="Id" />
+            <label for="nome" class="form-label">Nome do Projeto</label>
+            <input type="text" asp-for="NomeProjeto" class="form-control"  />
+            @Html.ValidationMessageFor(x => x.NomeProjeto)
+        </div>
+        <!-- Tipo do Projeto -->
+        <div class="mb-4">
+            <label for="regiao" class="form-label">Tipo</label>
+            <select asp-for="Tipo" class="form-select" id="regiao" >
+                <option value="">Selecione o Tipo de Projeto</option>
+                <option>Doação de Alimento</option>
+                <option>Ensino</option>
+                <option>Esporte</option>
+                <option>Doação de Roupa</option>
+                <option>Serviços</option>
+            </select>
+            @Html.ValidationMessageFor(x => x.Tipo)
+
+        </div>
+        <!-- Publico -->
+        <div class="mb-4">
+            <label for="Publico" class="form-label">Publico</label>
+            <select asp-for="Publico" class="form-select" id="Publico" >
+                <option value="">Selecione o Publico</option>
+                <option>Homens</option>
+                <option>Mulheres</option>
+                <option>Crianças</option>
+                <option>Idosos</option>
+                <option>Aberto</option>
+            </select>
+            @Html.ValidationMessageFor(x => x.Publico)
+        </div>
+
+
+
+        <!-- Descrição -->
+        <div class="mb-3">
+            <label for="descricao" class="form-label">Descrição</label>
+            <textarea asp-for="Descricao" class="form-control" id="descricao" rows="4" ></textarea>
+            @Html.ValidationMessageFor(x => x.Descricao)
+        </div>
+
+        <!-- Contato -->
+        <div class="mb-3">
+            <label for="contato" class="form-label">Telefone / WhatsApp</label>
+            <input type="text" asp-for="Telefone" class="form-control" id="contato"  />
+            @Html.ValidationMessageFor(x => x.Telefone)
+        </div>
+
+        <!-- CEP -->
+        <div class="mb-3">
+            <label for="cep" class="form-label">CEP</label>
+            <input type="text" asp-for="Cep" class="form-control" id="cep" maxlength="9" onblur="buscarCep()"  />
+            @Html.ValidationMessageFor(x => x.Cep)
+        </div>
+
+        <!-- Endereço -->
+        <div class="mb-3">
+            <label for="rua" class="form-label">Rua</label>
+            <input type="text" asp-for="Rua" class="form-control" id="rua"  />
+            @Html.ValidationMessageFor(x => x.Rua)
+        </div>
+
+        <div class="mb-3">
+            <label for="bairro" class="form-label">Bairro</label>
+            <input type="text" asp-for="Bairro" class="form-control" id="bairro"  />
+            @Html.ValidationMessageFor(x => x.Bairro)
+        </div>
+
+        <div class="mb-3">
+            <label for="cidade" class="form-label">Cidade</label>
+            <input type="text" asp-for="Cidade" class="form-control" id="cidade"  />
+            @Html.ValidationMessageFor(x => x.Cidade)
+        </div>
+
+        <div class="mb-3">
+            <label for="uf" class="form-label">Estado (UF)</label>
+            <input type="text" asp-for="Estado" class="form-control" id="uf"  />
+            @Html.ValidationMessageFor(x => x.Estado)
+        </div>
+
+        <div class="mb-3">
+            <label for="uf" class="form-label">Numero</label>
+            <input type="number" asp-for="Numero" class="form-control" id="numero"  />
+            @Html.ValidationMessageFor(x => x.Numero)
+        </div>
+
+
+        <button type="submit" asp-controller="Projetos" asp-action="Alterar" class="btn btn-primary">Alterar</button>
+        <a class="btn btn-secondary" asp-controller="Projetos" asp-action="Index" role="button"> Voltar</a>
+       </form>
+</div>
+
+
+
+
+<!-- Script ViaCEP -->
+<script>
+    function buscarCep() {
+      const cep = document.getElementById('cep').value.replace(/\D/g, '');
+      if (cep.length !== 8) {
+        alert('CEP inválido!');
+        return;
+      }
+
+      fetch(`https://viacep.com.br/ws/${cep}/json/`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.erro) {
+            alert("CEP não encontrado!");
+          } else {
+            document.getElementById('rua').value = data.logradouro;
+            document.getElementById('bairro').value = data.bairro;
+            document.getElementById('cidade').value = data.localidade;
+            document.getElementById('uf').value = data.uf;
+          }
+        })
+        .catch(() => alert("Erro ao buscar o CEP."));
+    }
+</script>
+
+
